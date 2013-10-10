@@ -26,7 +26,7 @@ static struct SimpleAnalogData {
   TextLayer day_label;
   char day_buffer[6];
   TextLayer hebrew_month_label;
-  char hebrew_month_buffer[6];
+  char hebrew_month_buffer[10];
   TextLayer num_label;
   char num_buffer[4];
   
@@ -109,11 +109,10 @@ static void date_update_proc(Layer* me, GContext* ctx) {
   string_format_time(s_data.num_buffer, sizeof(s_data.num_buffer), "%d", &currentPblTime);
   text_layer_set_text(&s_data.num_label, s_data.num_buffer);
   
-   int julianDay = hdate_gdate_to_jd(currentPblTime.tm_mday, currentPblTime.tm_mon + 1, currentPblTime.tm_year + 1900);
-  // Convert julian day to hebrew date
+  int julianDay = hdate_gdate_to_jd(currentPblTime.tm_mday, currentPblTime.tm_mon + 1, currentPblTime.tm_year + 1900);
+  //Convert julian day to hebrew date
   int hDay, hMonth, hYear, hDayTishrey, hNextTishrey;
   hdate_jd_to_hdate(julianDay, &hDay, &hMonth, &hYear, &hDayTishrey, &hNextTishrey);
-  //string_format_time(s_data.hebrew_day_buffer, sizeof(s_data.hebrew_day_buffer), "%d",&hDay);
   xsprintf(s_data.hebrew_day_buffer, "%s",hebrewNumbers[hDay-1]);
   text_layer_set_text(&s_data.hebrew_day_label, s_data.hebrew_day_buffer);
   
@@ -173,8 +172,17 @@ static void handle_init(AppContextRef app_ctx) {
   text_layer_set_font(&s_data.day_label, norm18);
   layer_add_child(&s_data.date_layer, &s_data.day_label.layer);
   
+  // init num
+  text_layer_init(&s_data.num_label, GRect(80, 115, 18, 20));
+  text_layer_set_text(&s_data.num_label, s_data.num_buffer);
+  text_layer_set_background_color(&s_data.num_label, GColorBlack);
+  text_layer_set_text_color(&s_data.num_label, GColorWhite);
+  GFont bold18 = fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD);
+  text_layer_set_font(&s_data.num_label, bold18);
+  layer_add_child(&s_data.date_layer, &s_data.num_label.layer);
+
   //init hebrew day
-  text_layer_init(&s_data.hebrew_day_label, GRect(65, 25, 27, 20));
+  text_layer_init(&s_data.hebrew_day_label, GRect(63, 25, 27, 20));
   text_layer_set_text(&s_data.hebrew_day_label, s_data.hebrew_day_buffer);
   text_layer_set_background_color(&s_data.hebrew_day_label, GColorBlack);
   text_layer_set_text_color(&s_data.hebrew_day_label, GColorWhite);
@@ -210,16 +218,6 @@ static void handle_init(AppContextRef app_ctx) {
   initAlephLayers(&s_data.hourEleven,davidFont,GRect(25, 10, 20, 20),"אי");
   
 
-  // init num
-  text_layer_init(&s_data.num_label, GRect(73, 114, 18, 20));
-
-  text_layer_set_text(&s_data.num_label, s_data.num_buffer);
-  text_layer_set_background_color(&s_data.num_label, GColorBlack);
-  text_layer_set_text_color(&s_data.num_label, GColorWhite);
-  GFont bold18 = fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD);
-  text_layer_set_font(&s_data.num_label, bold18);
-
-  layer_add_child(&s_data.date_layer, &s_data.num_label.layer);
 
   // init hands
   layer_init(&s_data.hands_layer, s_data.simple_bg_layer.frame);

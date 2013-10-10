@@ -1,28 +1,16 @@
 {
-  "media": [
-            {
-            "defName": "IMAGE_MENU_ICON",
+    "media": [
+        {
+            "defName": "IMAGE_ALEPH",
             "type": "png",
             "file": "images/menu_icon_hebrewwatch.png"
-            },
-            {
-            "characterRegex": "[A-Za-z0]",
-            "defName": "FONT_MOON_PHASES_SUBSET_30",
+        },
+        {
+            "defName": "FONT_DAVID_20",
             "type": "font",
-            "file": "fonts/moon_phases.ttf"
-            },
-            {
-            "type": "font",
-            "characterRegex": "[:0-9]",
-            "defName": "FONT_ROBOTO_BOLD_SUBSET_49",
-            "file": "fonts/Roboto-Bold.ttf"
-            },
-            {
-            "defName": "FONT_ROBOTO_CONDENSED_21",
-            "type": "font",
-            "file": "fonts/Roboto-Condensed.ttf"
-            }
-            ],
-  "friendlyVersion": "VERSION",
-  "versionDefName": "APP_RESOURCES"
+            "file": "fonts/david.ttf"
+        }
+    ],
+    "friendlyVersion": "VERSION",
+    "versionDefName": "APP_RESOURCES"
 }
