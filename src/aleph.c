@@ -103,7 +103,9 @@ static void date_update_proc(Layer* me, GContext* ctx) {
   PblTm currentPblTime;
   get_time(&currentPblTime);
 
-  string_format_time(s_data.day_buffer, sizeof(s_data.day_buffer), "%a", &currentPblTime);
+  
+  xsprintf(s_data.day_buffer, "%s",hebrewDays[currentPblTime.tm_wday]);
+  //string_format_time(s_data.day_buffer, sizeof(s_data.day_buffer), "%a", &currentPblTime);
   text_layer_set_text(&s_data.day_label, s_data.day_buffer);
 
   string_format_time(s_data.num_buffer, sizeof(s_data.num_buffer), "%d", &currentPblTime);
@@ -153,6 +155,9 @@ static void handle_init(AppContextRef app_ctx) {
     gpath_init(&s_data.tick_paths[i], &ANALOG_BG_POINTS[i]);
   }
 
+  GFont davidFont = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_DAVID_20));
+  GFont norm18 = fonts_get_system_font(FONT_KEY_GOTHIC_18);
+
   // init layers
   layer_init(&s_data.simple_bg_layer, s_data.window.layer.frame);
   s_data.simple_bg_layer.update_proc = &bg_update_proc;
@@ -162,18 +167,18 @@ static void handle_init(AppContextRef app_ctx) {
   layer_init(&s_data.date_layer, s_data.window.layer.frame);
   s_data.date_layer.update_proc = &date_update_proc;
   layer_add_child(&s_data.window.layer, &s_data.date_layer);
-
+  
+  
   // init day
-  text_layer_init(&s_data.day_label, GRect(46, 114, 27, 20));
+  text_layer_init(&s_data.day_label, GRect(40, 113, 35, 30));
   text_layer_set_text(&s_data.day_label, s_data.day_buffer);
   text_layer_set_background_color(&s_data.day_label, GColorBlack);
   text_layer_set_text_color(&s_data.day_label, GColorWhite);
-  GFont norm18 = fonts_get_system_font(FONT_KEY_GOTHIC_18);
-  text_layer_set_font(&s_data.day_label, norm18);
+  text_layer_set_font(&s_data.day_label, davidFont);
   layer_add_child(&s_data.date_layer, &s_data.day_label.layer);
   
   // init num
-  text_layer_init(&s_data.num_label, GRect(80, 115, 18, 20));
+  text_layer_init(&s_data.num_label, GRect(85, 115, 18, 20));
   text_layer_set_text(&s_data.num_label, s_data.num_buffer);
   text_layer_set_background_color(&s_data.num_label, GColorBlack);
   text_layer_set_text_color(&s_data.num_label, GColorWhite);
@@ -186,7 +191,6 @@ static void handle_init(AppContextRef app_ctx) {
   text_layer_set_text(&s_data.hebrew_day_label, s_data.hebrew_day_buffer);
   text_layer_set_background_color(&s_data.hebrew_day_label, GColorBlack);
   text_layer_set_text_color(&s_data.hebrew_day_label, GColorWhite);
-  GFont davidFont = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_DAVID_20));
   text_layer_set_font(&s_data.hebrew_day_label, davidFont);
   text_layer_set_text(&s_data.hebrew_day_label, "abc");
   layer_add_child(&s_data.date_layer, &s_data.hebrew_day_label.layer);
