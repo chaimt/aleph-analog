@@ -1,3 +1,4 @@
+#pragma once
 // Extracted from http://libhdate.sourceforge.net
 // Adaptation for Pebble use by Ary Tebeka contact@arytbk.net
 

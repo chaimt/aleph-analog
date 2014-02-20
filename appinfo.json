@@ -1,0 +1,30 @@
+{
+    "versionLabel": "2.1",
+    "uuid": "7000e3d6-9053-466a-bed5-ec3d3397ac40",
+    "appKeys": {},
+    "longName": "AlephClock",
+    "versionCode": 2,
+    "capabilities": [
+        ""
+    ],
+    "shortName": "AlephClock",
+    "companyName": "turel",
+    "watchapp": {
+        "watchface": true
+    },
+    "resources": {
+        "media": [
+            {
+                "type": "font",
+                "name": "FONT_NRKIS_20",
+                "file": "fonts/nrkis.ttf"
+            },
+            {
+                "menuIcon": true,
+                "type": "png",
+                "name": "IMAGE_ALEPH",
+                "file": "images/menu_icon_hebrewwatch.png"
+            }
+        ]
+    }
+}
